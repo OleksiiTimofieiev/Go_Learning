@@ -5,11 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"net/http"
+	"time"
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/calendar/v3"
+	"google.golang.org/api/option"
 )
 
 const (
@@ -18,11 +19,44 @@ const (
 )
 
 func GetUpcomingMeeting() {
-	_, err := newGcalClient()
-	fmt.Println("err: ", err)
+	client, err := newGcalClient()
+	if err != nil {
+		fmt.Println("err:", err)
+		return
+	}
+
+	eventService := calendar.NewEventsService(client)
+
+	eventLister := eventService.List("contrbas@gmail.com")
+
+	eventLister.MaxResults(5)
+	eventLister.OrderBy("startTime")
+	eventLister.SingleEvents(true)
+	eventLister.TimeMin(time.Now().Format(time.RFC3339))
+	events, err := eventLister.Do()
+
+	if err != nil {
+		fmt.Println("error retreiving events", err)
+	}
+	// fmt.Println("events: ", events)
+	event1 := events.Items[0]
+	// event2 := events.Items[1].Summary
+
+	// fmt.Printf("%#v\n", event)
+
+	// print(event1.C)
+	// print(event2)
+	if event1.ConferenceData != nil {
+		for _, entry := range event1.ConferenceData.EntryPoints {
+			if entry.EntryPointType == "video" {
+				fmt.Println(entry.Uri)
+			}
+		}
+	}
+
 }
 
-func newGcalClient() (*http.Client, error) {
+func newGcalClient() (*calendar.Service, error) {
 	credentialsB, err := ioutil.ReadFile(credentialPath)
 	if err != nil {
 		return nil, err
@@ -38,9 +72,9 @@ func newGcalClient() (*http.Client, error) {
 		return nil, err
 	}
 
-	client := config.Client(context.Background(), token)
+	ctx := context.Background()
 
-	return client, nil
+	return calendar.NewService(context.Background(), option.WithTokenSource(config.TokenSource(ctx, token)))
 }
 
 func getToken(config *oauth2.Config) (*oauth2.Token, error) {

@@ -1,0 +1,6 @@
+- RPC == remote procedure call
+- http2: binary protocol for gRPC vs http1
+- http2: header compression in case of the header replies (HPACK) 
+- http2: 1 TCP connection can handle several async requests == Multiplexing;
+- http2: server push == several replies on the one request
+- http2: prioritization of requests

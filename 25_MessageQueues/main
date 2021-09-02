@@ -1,0 +1,49 @@
+- kinda message broker
+
++:
+Слабое связывание
+Масштабируемость
+Эластичность
+Отказоустойчивость
+Гарантированная доставка
+Гарантированный порядок доставки
+Буферизация
+Понимание потоков данных
+Асинхронная связь
+
+--- Kafka --- : 
+linkedIn
+Распределённый программный брокер сообщений
+Написан на Java/Scala
+Придуман в Linkedin чтобы обрабатывать безумный объем данных
+Есть коммерческая поддержка (Confluent)
+Линейно масштабируемый
+С гаринтией упорядоченности
+Надежный (репликация)
+Высокодоступный (high availability)
+
+- Producer -> Topic: Partition -> Consumer are included in Group
+
+- Consumer has offset for reading
+- Msgs are deleted by the configured time
+- Msg: offset (time), key (Routing for partition), Value (Payload)
+- partition: segregate load from the topic - several instances may ready from different partitions
+- compaction is possible by a key creteria
+- delivery guarantees: at-most-once-delivery, at-least-once-delivery, exactly-once-delivery
+- best for high load of events: metrics, logs, user data
+
+--- RabbitMQ --- : 
+- AMQP (advanced message queue protocol)
+- publisher (patload with routing ket)-> exchange (route based on binding)-> queue -> subscriber
+- exchange types: 
+fanout (широковещательная точка обменаЖ рассылка уведомлений, конфигураций)
+direct (according to the routing key, round-robin used for load balancing)
+topic (* or # in binding key): ключ маршрутизации используется вместе с точкой обменаю app.notification.sms.# -> в очередь будут доставлены все сообщения, 
+отправленные с ключами, начинающиеся с app.notification.sms
+
+--- Event Driven Architecture ---
+- Event Notification: not directly couple elements of the system
+- State Transfer: data replication
+- Event collaboration: only events are known with common bus (example: orders topic, shipment topic, payments topic)
+- event sourcing
+- command - query - event

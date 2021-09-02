@@ -1,4 +1,4 @@
-package main
+package gcal
 
 import (
 	"context"
@@ -14,7 +14,7 @@ import (
 
 const (
 	tokenStash     = "/tmp/gcal-token"
-	credentialPath = "./credentials.json"
+	credentialPath = "./gcal/credentials.json"
 )
 
 func GetUpcomingMeeting() {

@@ -29,7 +29,7 @@ func GetUpcomingMeeting() {
 
 	eventLister := eventService.List("contrbas@gmail.com")
 
-	eventLister.MaxResults(5)
+	eventLister.MaxResults(500)
 	eventLister.OrderBy("startTime")
 	eventLister.SingleEvents(true)
 	eventLister.TimeMin(time.Now().Format(time.RFC3339))
@@ -39,12 +39,20 @@ func GetUpcomingMeeting() {
 		fmt.Println("error retreiving events", err)
 	}
 	// fmt.Println("events: ", events)
+
+	for i := 0; i < 500; i++ {
+		_, err := fmt.Println(events.Items[i].Summary)
+		if err != nil {
+			break
+		}
+
+	}
 	event1 := events.Items[0]
 	// event2 := events.Items[1].Summary
 
 	// fmt.Printf("%#v\n", event)
 
-	// print(event1.C)
+	print(event1.Summary)
 	// print(event2)
 	if event1.ConferenceData != nil {
 		for _, entry := range event1.ConferenceData.EntryPoints {

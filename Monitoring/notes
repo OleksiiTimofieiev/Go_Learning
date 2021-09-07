@@ -1,0 +1,33 @@
+LA (load average) - длина очереди процессов в планировщике (количество потоков ОС ожидающих ресурса)
+top, iostat, dstat, atop
+CPU (User/system/wait) - время проводимое процессами в различных режимах
+top, htop
+Memory (RSS/Shared/Cached/Free) - распределение памяти в системе
+IO Stats - iostat, iostat -x 1, xstat, iotop
+Network stats - iftop
+
+
+---
+
+RPS - request per second
+Response time
+Reply key (200/500/4xx/5xx)
+Diff Api methods
+Работать с перцентилями
+
+-- DBA
+
+TPS - transaction per second
+QPS - query per second
+IO usage
+CPU usage
+Replication lag
+Wait Events
+Active connections
+
+-- 
+
+Latency - Reply time
+Traffic - requests amount
+Errors - quantity of errrors
+Saturation - resource utilization

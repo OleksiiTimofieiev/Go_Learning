@@ -7,6 +7,8 @@ build:
 test:
 	@ go test -v -race -timeout 30s "../src/REST_Api/apiserver/"
 	@ go test -v -race -timeout 30s "../src/REST_Api/store/"
+	@ go test -v -race -timeout 30s "../src/REST_Api/model/"
+
 
 # sudo service postgresql start
 # migrate create -ext sql -dir ./src/REST_Api/migrations create_user

@@ -6,7 +6,8 @@ build:
 .PHONY: test
 test:
 	@ go test -v -race -timeout 30s "../src/REST_Api/apiserver/"
-	@ go test -v -race -timeout 30s "../src/REST_Api/store/"
+	@ go test -v -race -timeout 30s "../src/REST_Api/store/sqlstore"
+	@ go test -v -race -timeout 30s "../src/REST_Api/store/teststore"
 	@ go test -v -race -timeout 30s "../src/REST_Api/model/"
 
 
